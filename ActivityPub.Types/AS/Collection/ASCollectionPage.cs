@@ -17,7 +17,7 @@ namespace ActivityPub.Types.AS.Collection;
 /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collectionpage" />
 public class ASCollectionPage : ASCollection
 {
-    public ASCollectionPage() => Entity = new ASCollectionPageEntity { TypeMap = TypeMap };
+    public ASCollectionPage() => Entity = TypeMap.Add<ASCollectionPageEntity>();
     public ASCollectionPage(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ASCollectionPageEntity>();
     private ASCollectionPageEntity Entity { get; }
 
@@ -69,7 +69,7 @@ public class ASCollectionPage : ASCollection
 /// <inheritdoc cref="ASCollectionPage" />
 [APType(CollectionPageType)]
 [ImpliesOtherEntity(typeof(ASCollectionEntity))]
-public sealed class ASCollectionPageEntity : ASEntity<ASCollectionPage>
+public sealed class ASCollectionPageEntity : IHasNonEntity<ASCollectionPage>
 {
     public const string CollectionPageType = "CollectionPage";
     public override string ASTypeName => CollectionPageType;

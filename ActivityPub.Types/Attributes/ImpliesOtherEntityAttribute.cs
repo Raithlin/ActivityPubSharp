@@ -7,12 +7,12 @@ using JetBrains.Annotations;
 namespace ActivityPub.Types.Attributes;
 
 /// <summary>
-///     When placed on an entity deriving from <see cref="ASEntity" />, indicates that any object containing this type will implicitly include another type.
+///     When placed on an entity deriving from <see cref="IEntity" />, indicates that any object containing this type will implicitly include another type.
 ///     This is only used during JSON conversion, so the public inheritance chain SHOULD follow the same structure.
 ///     Multiple attributes may be specified.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
-[BaseTypeRequired(typeof(ASEntity))]
+[BaseTypeRequired(typeof(IEntity))]
 public sealed class ImpliesOtherEntityAttribute : Attribute
 {
     /// <summary>
@@ -22,8 +22,8 @@ public sealed class ImpliesOtherEntityAttribute : Attribute
 
     public ImpliesOtherEntityAttribute(Type type)
     {
-        if (!type.IsAssignableTo(typeof(ASEntity)))
-            throw new ArgumentException("Implied type must derive from ASEntity", nameof(type));
+        if (!type.IsAssignableTo(typeof(IEntity)))
+            throw new ArgumentException("Implied type must derive from IEntity", nameof(type));
 
         Type = type;
     }

@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class ListenActivity : ASTransitiveActivity
 {
-    public ListenActivity() => Entity = new ListenActivityEntity { TypeMap = TypeMap };
+    public ListenActivity() => Entity = TypeMap.Add<ListenActivityEntity>();
     public ListenActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ListenActivityEntity>();
     private ListenActivityEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class ListenActivity : ASTransitiveActivity
 /// <inheritdoc cref="ListenActivity" />
 [APType(ListenType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class ListenActivityEntity : ASEntity<ListenActivity>
+public sealed class ListenActivityEntity : IHasNonEntity<ListenActivity>
 {
     public const string ListenType = "Listen";
     public override string ASTypeName => ListenType;

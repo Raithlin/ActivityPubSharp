@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class LeaveActivity : ASTransitiveActivity
 {
-    public LeaveActivity() => Entity = new LeaveActivityEntity { TypeMap = TypeMap };
+    public LeaveActivity() => Entity = TypeMap.Add<LeaveActivityEntity>();
     public LeaveActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<LeaveActivityEntity>();
     private LeaveActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class LeaveActivity : ASTransitiveActivity
 /// <inheritdoc cref="LeaveActivity" />
 [APType(LeaveType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class LeaveActivityEntity : ASEntity<LeaveActivity>
+public sealed class LeaveActivityEntity : IHasNonEntity<LeaveActivity>
 {
     public const string LeaveType = "Leave";
     public override string ASTypeName => LeaveType;

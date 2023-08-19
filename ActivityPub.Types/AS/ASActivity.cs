@@ -19,7 +19,7 @@ namespace ActivityPub.Types.AS;
 /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-activity" />
 public class ASActivity : ASObject
 {
-    public ASActivity() => Entity = new ASActivityEntity { TypeMap = TypeMap };
+    public ASActivity() => Entity = TypeMap.Add<ASActivityEntity>();
     public ASActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ASActivityEntity>();
     private ASActivityEntity Entity { get; }
 
@@ -73,7 +73,7 @@ public class ASActivity : ASObject
 /// <inheritdoc cref="ASActivity" />
 [APType(ActivityType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class ASActivityEntity : ASEntity<ASActivity>, ISubTypeDeserialized
+public sealed class ASActivityEntity : IHasNonEntity<ASActivity>, ISubTypeDeserialized
 {
     public const string ActivityType = "Activity";
     public override string ASTypeName => ActivityType;

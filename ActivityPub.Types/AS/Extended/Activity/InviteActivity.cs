@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class InviteActivity : OfferActivity
 {
-    public InviteActivity() => Entity = new InviteActivityEntity { TypeMap = TypeMap };
+    public InviteActivity() => Entity = TypeMap.Add<InviteActivityEntity>();
     public InviteActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<InviteActivityEntity>();
     private InviteActivityEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class InviteActivity : OfferActivity
 /// <inheritdoc cref="InviteActivity" />
 [APType(InviteType)]
 [ImpliesOtherEntity(typeof(OfferActivityEntity))]
-public sealed class InviteActivityEntity : ASEntity<InviteActivity>
+public sealed class InviteActivityEntity : IHasNonEntity<InviteActivity>
 {
     public const string InviteType = "Invite";
     public override string ASTypeName => InviteType;

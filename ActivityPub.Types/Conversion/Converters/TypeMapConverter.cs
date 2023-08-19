@@ -92,7 +92,7 @@ public class TypeMapConverter : JsonConverter<TypeMap>
             ReadEntity(jsonElement, meta, narrowType);
 
         // Use default conversion
-        var entity = (ASEntity?)jsonElement.Deserialize(entityType, meta.JsonSerializerOptions)
+        var entity = (IEntity?)jsonElement.Deserialize(entityType, meta.JsonSerializerOptions)
                      ?? throw new JsonException($"Failed to deserialize {entityType} - JsonElement.Deserialize returned null");
 
         // Add it to the graph.
@@ -165,7 +165,7 @@ public class TypeMapConverter : JsonConverter<TypeMap>
         outputNode.WriteTo(writer, options);
     }
 
-    private static void WriteEntity(ASEntity entity, Type entityType, JsonObject outputNode, SerializationMetadata meta)
+    private static void WriteEntity(IEntity entity, Type entityType, JsonObject outputNode, SerializationMetadata meta)
     {
         // Convert to an intermediate object
         var element = JsonSerializer.SerializeToElement(entity, entityType, meta.JsonSerializerOptions);

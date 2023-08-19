@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class OfferActivity : ASTransitiveActivity
 {
-    public OfferActivity() => Entity = new OfferActivityEntity { TypeMap = TypeMap };
+    public OfferActivity() => Entity = TypeMap.Add<OfferActivityEntity>();
     public OfferActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<OfferActivityEntity>();
     private OfferActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class OfferActivity : ASTransitiveActivity
 /// <inheritdoc cref="OfferActivity" />
 [APType(OfferType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class OfferActivityEntity : ASEntity<OfferActivity>
+public sealed class OfferActivityEntity : IHasNonEntity<OfferActivity>
 {
     public const string OfferType = "Offer";
     public override string ASTypeName => OfferType;

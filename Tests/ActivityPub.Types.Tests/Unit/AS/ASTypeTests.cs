@@ -67,13 +67,13 @@ public abstract class ASTypeTests
 
     private class StubASType : ASType
     {
-        public StubASType() => Entity = new StubASTypeEntity { TypeMap = TypeMap };
+        public StubASType() => Entity = TypeMap.Add<StubASTypeEntity>();
         public StubASType(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<StubASTypeEntity>();
         private StubASTypeEntity Entity { get; }
     }
 
     [ImpliesOtherEntity(typeof(ASTypeEntity))]
-    private sealed class StubASTypeEntity : ASEntity<StubASType>
+    private sealed class StubASTypeEntity : IHasNonEntity<StubASType>
     {
         public const string StubType = "Stub";
         public override string ASTypeName => StubType;

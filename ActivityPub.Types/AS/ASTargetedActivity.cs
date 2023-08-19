@@ -40,7 +40,7 @@ public class ASTargetedActivity : ASTransitiveActivity
 
 /// <inheritdoc cref="ASTargetedActivity" />
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class ASTargetedActivityEntity : ASEntity<ASTargetedActivity>
+public sealed class ASTargetedActivityEntity : IHasNonEntity<ASTargetedActivity>
 {
     /// <inheritdoc cref="ASTargetedActivity.Target" />
     [JsonPropertyName("target")]

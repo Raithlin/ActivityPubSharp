@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class FollowActivity : ASTransitiveActivity
 {
-    public FollowActivity() => Entity = new FollowActivityEntity { TypeMap = TypeMap };
+    public FollowActivity() => Entity = TypeMap.Add<FollowActivityEntity>();
     public FollowActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<FollowActivityEntity>();
     private FollowActivityEntity Entity { get; }
 }
@@ -20,7 +20,7 @@ public class FollowActivity : ASTransitiveActivity
 /// <inheritdoc cref="FollowActivity" />
 [APType(FollowType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class FollowActivityEntity : ASEntity<FollowActivity>
+public sealed class FollowActivityEntity : IHasNonEntity<FollowActivity>
 {
     public const string FollowType = "Follow";
     public override string ASTypeName => FollowType;

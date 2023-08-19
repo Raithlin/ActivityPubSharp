@@ -96,7 +96,7 @@ public class ASTypeInfoCache : IASTypeInfoCache
         foreach (var type in assembly.GetTypes())
         {
             // Skip if its not an AS type
-            if (!type.IsAssignableTo(typeof(ASEntity)))
+            if (!type.IsAssignableTo(typeof(IEntity)))
                 continue;
 
             // Skip if we've already registered it

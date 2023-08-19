@@ -92,7 +92,7 @@ public class ASLink : ASType
 /// <inheritdoc cref="ASLink" />
 [APType(LinkType)]
 [ImpliesOtherEntity(typeof(ASTypeEntity))]
-public sealed class ASLinkEntity : ASEntity<ASLink>, ILinkEntity
+public sealed class ASLinkEntity : IHasNonEntity<ASLink>, ILinkEntity
 {
     public const string LinkType = "Link";
     public override string ASTypeName => LinkType;

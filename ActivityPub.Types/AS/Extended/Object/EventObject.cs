@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class EventObject : ASObject
 {
-    public EventObject() => Entity = new EventObjectEntity { TypeMap = TypeMap };
+    public EventObject() => Entity = TypeMap.Add<EventObjectEntity>();
     public EventObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<EventObjectEntity>();
     private EventObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class EventObject : ASObject
 /// <inheritdoc cref="EventObject" />
 [APType(EventType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class EventObjectEntity : ASEntity<EventObject>
+public sealed class EventObjectEntity : IHasNonEntity<EventObject>
 {
     public const string EventType = "Event";
     public override string ASTypeName => EventType;

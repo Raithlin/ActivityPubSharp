@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class PageObject : DocumentObject
 {
-    public PageObject() => Entity = new PageObjectEntity { TypeMap = TypeMap };
+    public PageObject() => Entity = TypeMap.Add<PageObjectEntity>();
     public PageObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<PageObjectEntity>();
     private PageObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class PageObject : DocumentObject
 /// <inheritdoc cref="PageObject" />
 [APType(PageType)]
 [ImpliesOtherEntity(typeof(DocumentObjectEntity))]
-public sealed class PageObjectEntity : ASEntity<PageObject>
+public sealed class PageObjectEntity : IHasNonEntity<PageObject>
 {
     public const string PageType = "Page";
     public override string ASTypeName => PageType;

@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Actor;
 /// </summary>
 public class PersonActor : ASActor
 {
-    public PersonActor() => Entity = new PersonActorEntity { TypeMap = TypeMap };
+    public PersonActor() => Entity = TypeMap.Add<PersonActorEntity>();
     public PersonActor(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<PersonActorEntity>();
     private PersonActorEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class PersonActor : ASActor
 /// <inheritdoc cref="PersonActor" />
 [APType(PersonType)]
 [ImpliesOtherEntity(typeof(ASActorEntity))]
-public sealed class PersonActorEntity : ASEntity<PersonActor>
+public sealed class PersonActorEntity : IHasNonEntity<PersonActor>
 {
     public const string PersonType = "Person";
     public override string ASTypeName => PersonType;

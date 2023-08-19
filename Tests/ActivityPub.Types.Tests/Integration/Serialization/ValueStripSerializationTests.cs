@@ -115,7 +115,7 @@ public class ValueStripSerializationTests : SerializationTests
 
 public class FakeObjectWithSpecialNullability : ASObject
 {
-    public FakeObjectWithSpecialNullability() => Entity = new FakeObjectWithSpecialNullabilityEntity { TypeMap = TypeMap };
+    public FakeObjectWithSpecialNullability() => Entity = new FakeObjectWithSpecialNullabilityEntity();
     public FakeObjectWithSpecialNullability(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<FakeObjectWithSpecialNullabilityEntity>();
     private FakeObjectWithSpecialNullabilityEntity Entity { get; }
 
@@ -146,7 +146,7 @@ public class FakeObjectWithSpecialNullability : ASObject
 }
 
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class FakeObjectWithSpecialNullabilityEntity : ASEntity<FakeObjectWithSpecialNullability>
+public sealed class FakeObjectWithSpecialNullabilityEntity : IHasNonEntity<FakeObjectWithSpecialNullability>
 {
     public const string FakeObjectWithSpecialNullabilityEntityName = "FakeObjectWithSpecialNullability";
     public override string ASTypeName => FakeObjectWithSpecialNullabilityEntityName;

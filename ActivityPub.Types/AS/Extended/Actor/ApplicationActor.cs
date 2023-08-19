@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Actor;
 /// </summary>
 public class ApplicationActor : ASActor
 {
-    public ApplicationActor() => Entity = new ApplicationActorEntity { TypeMap = TypeMap };
+    public ApplicationActor() => Entity = TypeMap.Add<ApplicationActorEntity>();
     public ApplicationActor(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ApplicationActorEntity>();
     private ApplicationActorEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class ApplicationActor : ASActor
 /// <inheritdoc cref="ApplicationActor" />
 [APType(ApplicationType)]
 [ImpliesOtherEntity(typeof(ASActorEntity))]
-public sealed class ApplicationActorEntity : ASEntity<ApplicationActor>
+public sealed class ApplicationActorEntity : IHasNonEntity<ApplicationActor>
 {
     public const string ApplicationType = "Application";
     public override string ASTypeName => ApplicationType;

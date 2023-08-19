@@ -17,7 +17,7 @@ namespace ActivityPub.Types.AS.Collection;
 /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollectionpage" />
 public class ASOrderedCollectionPage : ASOrderedCollection
 {
-    public ASOrderedCollectionPage() => Entity = new ASOrderedCollectionPageEntity { TypeMap = TypeMap };
+    public ASOrderedCollectionPage() => Entity = TypeMap.Add<ASOrderedCollectionPageEntity>();
     public ASOrderedCollectionPage(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ASOrderedCollectionPageEntity>();
     private ASOrderedCollectionPageEntity Entity { get; }
 
@@ -69,7 +69,7 @@ public class ASOrderedCollectionPage : ASOrderedCollection
 /// <inheritdoc cref="ASOrderedCollectionPage" />
 [APType(OrderedCollectionPageType)]
 [ImpliesOtherEntity(typeof(ASOrderedCollectionEntity))]
-public sealed class ASOrderedCollectionPageEntity : ASEntity<ASOrderedCollectionPage>
+public sealed class ASOrderedCollectionPageEntity : IHasNonEntity<ASOrderedCollectionPage>
 {
     public const string OrderedCollectionPageType = "OrderedCollectionPage";
     public override string ASTypeName => OrderedCollectionPageType;

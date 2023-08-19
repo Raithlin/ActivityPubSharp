@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class ProfileObject : ASObject
 {
-    public ProfileObject() => Entity = new ProfileObjectEntity { TypeMap = TypeMap };
+    public ProfileObject() => Entity = TypeMap.Add<ProfileObjectEntity>();
     public ProfileObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ProfileObjectEntity>();
     private ProfileObjectEntity Entity { get; }
 
@@ -30,7 +30,7 @@ public class ProfileObject : ASObject
 /// <inheritdoc cref="ProfileObject" />
 [APType(ProfileType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class ProfileObjectEntity : ASEntity<ProfileObject>
+public sealed class ProfileObjectEntity : IHasNonEntity<ProfileObject>
 {
     public const string ProfileType = "Profile";
     public override string ASTypeName => ProfileType;

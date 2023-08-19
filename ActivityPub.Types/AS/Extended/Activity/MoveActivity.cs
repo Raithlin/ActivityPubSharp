@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class MoveActivity : ASTransitiveActivity
 {
-    public MoveActivity() => Entity = new MoveActivityEntity { TypeMap = TypeMap };
+    public MoveActivity() => Entity = TypeMap.Add<MoveActivityEntity>();
     public MoveActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<MoveActivityEntity>();
     private MoveActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class MoveActivity : ASTransitiveActivity
 /// <inheritdoc cref="MoveActivity" />
 [APType(MoveType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class MoveActivityEntity : ASEntity<MoveActivity>
+public sealed class MoveActivityEntity : IHasNonEntity<MoveActivity>
 {
     public const string MoveType = "Move";
     public override string ASTypeName => MoveType;

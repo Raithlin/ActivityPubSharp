@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class TombstoneObject : ASObject
 {
-    public TombstoneObject() => Entity = new TombstoneObjectEntity { TypeMap = TypeMap };
+    public TombstoneObject() => Entity = TypeMap.Add<TombstoneObjectEntity>();
     public TombstoneObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<TombstoneObjectEntity>();
     private TombstoneObjectEntity Entity { get; }
 
@@ -40,7 +40,7 @@ public class TombstoneObject : ASObject
 /// <inheritdoc cref="TombstoneObject" />
 [APType(TombstoneType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class TombstoneObjectEntity : ASEntity<TombstoneObject>
+public sealed class TombstoneObjectEntity : IHasNonEntity<TombstoneObject>
 {
     public const string TombstoneType = "Tombstone";
     public override string ASTypeName => TombstoneType;

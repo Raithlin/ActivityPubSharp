@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class NoteObject : ASObject
 {
-    public NoteObject() => Entity = new NoteObjectEntity { TypeMap = TypeMap };
+    public NoteObject() => Entity = TypeMap.Add<NoteObjectEntity>();
     public NoteObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<NoteObjectEntity>();
     private NoteObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class NoteObject : ASObject
 /// <inheritdoc cref="NoteObject" />
 [APType(NoteType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class NoteObjectEntity : ASEntity<NoteObject>
+public sealed class NoteObjectEntity : IHasNonEntity<NoteObject>
 {
     public const string NoteType = "Note";
     public override string ASTypeName => NoteType;

@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class AddActivity : ASTargetedActivity
 {
-    public AddActivity() => Entity = new AddActivityEntity { TypeMap = TypeMap };
+    public AddActivity() => Entity = TypeMap.Add<AddActivityEntity>();
     public AddActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<AddActivityEntity>();
     private AddActivityEntity Entity { get; }
 }
@@ -20,7 +20,7 @@ public class AddActivity : ASTargetedActivity
 /// <inheritdoc cref="AddActivity" />
 [APType(AddType)]
 [ImpliesOtherEntity(typeof(ASTargetedActivityEntity))]
-public sealed class AddActivityEntity : ASEntity<AddActivity>
+public sealed class AddActivityEntity : IHasNonEntity<AddActivity>
 {
     public const string AddType = "Add";
     public override string ASTypeName => AddType;

@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class AudioObject : DocumentObject
 {
-    public AudioObject() => Entity = new AudioObjectEntity { TypeMap = TypeMap };
+    public AudioObject() => Entity = TypeMap.Add<AudioObjectEntity>();
     public AudioObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<AudioObjectEntity>();
     private AudioObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class AudioObject : DocumentObject
 /// <inheritdoc cref="AudioObject" />
 [APType(AudioType)]
 [ImpliesOtherEntity(typeof(DocumentObjectEntity))]
-public sealed class AudioObjectEntity : ASEntity<AudioObject>
+public sealed class AudioObjectEntity : IHasNonEntity<AudioObject>
 {
     public const string AudioType = "Audio";
     public override string ASTypeName => AudioType;

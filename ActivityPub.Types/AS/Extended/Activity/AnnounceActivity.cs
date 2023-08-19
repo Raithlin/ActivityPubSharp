@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class AnnounceActivity : ASTransitiveActivity
 {
-    public AnnounceActivity() => Entity = new AnnounceActivityEntity { TypeMap = TypeMap };
+    public AnnounceActivity() => Entity = TypeMap.Add<AnnounceActivityEntity>();
     public AnnounceActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<AnnounceActivityEntity>();
     private AnnounceActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class AnnounceActivity : ASTransitiveActivity
 /// <inheritdoc cref="AnnounceActivity" />
 [APType(AnnounceType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class AnnounceActivityEntity : ASEntity<AnnounceActivity>
+public sealed class AnnounceActivityEntity : IHasNonEntity<AnnounceActivity>
 {
     public const string AnnounceType = "Announce";
     public override string ASTypeName => AnnounceType;

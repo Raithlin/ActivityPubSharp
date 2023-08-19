@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Actor;
 /// </summary>
 public class GroupActor : ASActor
 {
-    public GroupActor() => Entity = new GroupActorEntity { TypeMap = TypeMap };
+    public GroupActor() => Entity = TypeMap.Add<GroupActorEntity>();
     public GroupActor(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<GroupActorEntity>();
     private GroupActorEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class GroupActor : ASActor
 /// <inheritdoc cref="GroupActor" />
 [APType(GroupType)]
 [ImpliesOtherEntity(typeof(ASActorEntity))]
-public sealed class GroupActorEntity : ASEntity<GroupActor>
+public sealed class GroupActorEntity : IHasNonEntity<GroupActor>
 {
     public const string GroupType = "Group";
     public override string ASTypeName => GroupType;

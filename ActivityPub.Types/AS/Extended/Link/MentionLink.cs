@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Link;
 /// </summary>
 public class MentionLink : ASLink
 {
-    public MentionLink() => Entity = new MentionLinkEntity { TypeMap = TypeMap };
+    public MentionLink() => Entity = TypeMap.Add<MentionLinkEntity>();
     public MentionLink(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<MentionLinkEntity>();
     private MentionLinkEntity Entity { get; }
 
@@ -31,7 +31,7 @@ public class MentionLink : ASLink
 /// </summary>
 [APType(MentionType)]
 [ImpliesOtherEntity(typeof(ASLinkEntity))]
-public sealed class MentionLinkEntity : ASEntity<MentionLink>
+public sealed class MentionLinkEntity : IHasNonEntity<MentionLink>
 {
     public const string MentionType = "Mention";
     public override string ASTypeName => MentionType;

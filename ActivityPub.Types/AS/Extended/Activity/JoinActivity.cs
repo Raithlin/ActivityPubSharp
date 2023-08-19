@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class JoinActivity : ASTransitiveActivity
 {
-    public JoinActivity() => Entity = new JoinActivityEntity { TypeMap = TypeMap };
+    public JoinActivity() => Entity = TypeMap.Add<JoinActivityEntity>();
     public JoinActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<JoinActivityEntity>();
     private JoinActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class JoinActivity : ASTransitiveActivity
 /// <inheritdoc cref="JoinActivity" />
 [APType(JoinType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class JoinActivityEntity : ASEntity<JoinActivity>
+public sealed class JoinActivityEntity : IHasNonEntity<JoinActivity>
 {
     public const string JoinType = "Join";
     public override string ASTypeName => JoinType;

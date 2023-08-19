@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class ArticleObject : ASObject
 {
-    public ArticleObject() => Entity = new ArticleObjectEntity { TypeMap = TypeMap };
+    public ArticleObject() => Entity = TypeMap.Add<ArticleObjectEntity>();
     public ArticleObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ArticleObjectEntity>();
     private ArticleObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class ArticleObject : ASObject
 /// <inheritdoc cref="ArticleObject" />
 [APType(ArticleType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class ArticleObjectEntity : ASEntity<ArticleObject>
+public sealed class ArticleObjectEntity : IHasNonEntity<ArticleObject>
 {
     public const string ArticleType = "Article";
     public override string ASTypeName => ArticleType;

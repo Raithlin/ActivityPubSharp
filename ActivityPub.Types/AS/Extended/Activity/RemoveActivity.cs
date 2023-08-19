@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class RemoveActivity : ASTargetedActivity
 {
-    public RemoveActivity() => Entity = new RemoveActivityEntity { TypeMap = TypeMap };
+    public RemoveActivity() => Entity = TypeMap.Add<RemoveActivityEntity>();
     public RemoveActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<RemoveActivityEntity>();
     private RemoveActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class RemoveActivity : ASTargetedActivity
 /// <inheritdoc cref="RemoveActivity" />
 [APType(RemoveType)]
 [ImpliesOtherEntity(typeof(ASTargetedActivityEntity))]
-public sealed class RemoveActivityEntity : ASEntity<RemoveActivity>
+public sealed class RemoveActivityEntity : IHasNonEntity<RemoveActivity>
 {
     public const string RemoveType = "Remove";
     public override string ASTypeName => RemoveType;

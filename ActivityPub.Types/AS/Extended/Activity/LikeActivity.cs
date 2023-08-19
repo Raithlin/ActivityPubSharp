@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class LikeActivity : ASTransitiveActivity
 {
-    public LikeActivity() => Entity = new LikeActivityEntity { TypeMap = TypeMap };
+    public LikeActivity() => Entity = TypeMap.Add<LikeActivityEntity>();
     public LikeActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<LikeActivityEntity>();
     private LikeActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class LikeActivity : ASTransitiveActivity
 /// <inheritdoc cref="LikeActivity" />
 [APType(LikeType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class LikeActivityEntity : ASEntity<LikeActivity>
+public sealed class LikeActivityEntity : IHasNonEntity<LikeActivity>
 {
     public const string LikeType = "Like";
     public override string ASTypeName => LikeType;

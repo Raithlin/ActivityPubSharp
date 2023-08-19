@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class IgnoreActivity : ASTransitiveActivity
 {
-    public IgnoreActivity() => Entity = new IgnoreActivityEntity { TypeMap = TypeMap };
+    public IgnoreActivity() => Entity = TypeMap.Add<IgnoreActivityEntity>();
     public IgnoreActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<IgnoreActivityEntity>();
     private IgnoreActivityEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class IgnoreActivity : ASTransitiveActivity
 /// <inheritdoc cref="IgnoreActivity" />
 [APType(IgnoreType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class IgnoreActivityEntity : ASEntity<IgnoreActivity>
+public sealed class IgnoreActivityEntity : IHasNonEntity<IgnoreActivity>
 {
     public const string IgnoreType = "Ignore";
     public override string ASTypeName => IgnoreType;

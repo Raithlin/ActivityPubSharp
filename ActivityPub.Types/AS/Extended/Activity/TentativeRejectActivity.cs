@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class TentativeRejectActivity : RejectActivity
 {
-    public TentativeRejectActivity() => Entity = new TentativeRejectActivityEntity { TypeMap = TypeMap };
+    public TentativeRejectActivity() => Entity = TypeMap.Add<TentativeRejectActivityEntity>();
     public TentativeRejectActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<TentativeRejectActivityEntity>();
     private TentativeRejectActivityEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class TentativeRejectActivity : RejectActivity
 /// <inheritdoc cref="TentativeRejectActivity" />
 [APType(TentativeRejectType)]
 [ImpliesOtherEntity(typeof(RejectActivityEntity))]
-public sealed class TentativeRejectActivityEntity : ASEntity<TentativeRejectActivity>
+public sealed class TentativeRejectActivityEntity : IHasNonEntity<TentativeRejectActivity>
 {
     public const string TentativeRejectType = "TentativeReject";
     public override string ASTypeName => TentativeRejectType;

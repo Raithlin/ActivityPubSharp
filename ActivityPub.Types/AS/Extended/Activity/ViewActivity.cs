@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class ViewActivity : ASTransitiveActivity
 {
-    public ViewActivity() => Entity = new ViewActivityEntity { TypeMap = TypeMap };
+    public ViewActivity() => Entity = TypeMap.Add<ViewActivityEntity>();
     public ViewActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ViewActivityEntity>();
     private ViewActivityEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class ViewActivity : ASTransitiveActivity
 /// <inheritdoc cref="ViewActivity" />
 [APType(ViewType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class ViewActivityEntity : ASEntity<ViewActivity>
+public sealed class ViewActivityEntity : IHasNonEntity<ViewActivity>
 {
     public const string ViewType = "View";
     public override string ASTypeName => ViewType;

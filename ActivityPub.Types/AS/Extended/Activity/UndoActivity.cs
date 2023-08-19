@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class UndoActivity : ASTransitiveActivity
 {
-    public UndoActivity() => Entity = new UndoActivityEntity { TypeMap = TypeMap };
+    public UndoActivity() => Entity = TypeMap.Add<UndoActivityEntity>();
     public UndoActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<UndoActivityEntity>();
     private UndoActivityEntity Entity { get; }
 }
@@ -20,7 +20,7 @@ public class UndoActivity : ASTransitiveActivity
 /// <inheritdoc cref="UndoActivity" />
 [APType(UndoType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class UndoActivityEntity : ASEntity<UndoActivity>
+public sealed class UndoActivityEntity : IHasNonEntity<UndoActivity>
 {
     public const string UndoType = "Undo";
     public override string ASTypeName => UndoType;

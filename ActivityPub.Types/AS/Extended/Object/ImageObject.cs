@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class ImageObject : DocumentObject
 {
-    public ImageObject() => Entity = new ImageObjectEntity { TypeMap = TypeMap };
+    public ImageObject() => Entity = TypeMap.Add<ImageObjectEntity>();
     public ImageObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ImageObjectEntity>();
     private ImageObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class ImageObject : DocumentObject
 /// <inheritdoc cref="ImageObject" />
 [APType(ImageType)]
 [ImpliesOtherEntity(typeof(DocumentObjectEntity))]
-public sealed class ImageObjectEntity : ASEntity<ImageObject>
+public sealed class ImageObjectEntity : IHasNonEntity<ImageObject>
 {
     public const string ImageType = "Image";
     public override string ASTypeName => ImageType;

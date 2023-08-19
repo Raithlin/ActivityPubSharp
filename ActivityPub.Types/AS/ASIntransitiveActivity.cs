@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS;
 /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-intransitiveactivity" />
 public class ASIntransitiveActivity : ASActivity
 {
-    public ASIntransitiveActivity() => Entity = new ASIntransitiveActivityEntity { TypeMap = TypeMap };
+    public ASIntransitiveActivity() => Entity = TypeMap.Add<ASIntransitiveActivityEntity>();
     public ASIntransitiveActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ASIntransitiveActivityEntity>();
     private ASIntransitiveActivityEntity Entity { get; }
 }
@@ -20,7 +20,7 @@ public class ASIntransitiveActivity : ASActivity
 /// <inheritdoc cref="ASIntransitiveActivity" />
 [APType(IntransitiveActivityType)]
 [ImpliesOtherEntity(typeof(ASActivityEntity))]
-public sealed class ASIntransitiveActivityEntity : ASEntity<ASIntransitiveActivity>
+public sealed class ASIntransitiveActivityEntity : IHasNonEntity<ASIntransitiveActivity>
 {
     public const string IntransitiveActivityType = "IntransitiveActivity";
     public override string ASTypeName => IntransitiveActivityType;

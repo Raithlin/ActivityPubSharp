@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class DocumentObject : ASObject
 {
-    public DocumentObject() => Entity = new DocumentObjectEntity { TypeMap = TypeMap };
+    public DocumentObject() => Entity = TypeMap.Add<DocumentObjectEntity>();
     public DocumentObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<DocumentObjectEntity>();
     private DocumentObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class DocumentObject : ASObject
 /// <inheritdoc cref="DocumentObject" />
 [APType(DocumentType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class DocumentObjectEntity : ASEntity<DocumentObject>
+public sealed class DocumentObjectEntity : IHasNonEntity<DocumentObject>
 {
     public const string DocumentType = "Document";
     public override string ASTypeName => DocumentType;

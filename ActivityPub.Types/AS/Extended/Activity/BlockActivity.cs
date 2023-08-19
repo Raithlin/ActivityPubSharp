@@ -13,7 +13,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class BlockActivity : IgnoreActivity
 {
-    public BlockActivity() => Entity = new BlockActivityEntity { TypeMap = TypeMap };
+    public BlockActivity() => Entity = TypeMap.Add<BlockActivityEntity>();
     public BlockActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<BlockActivityEntity>();
     private BlockActivityEntity Entity { get; }
 }
@@ -21,7 +21,7 @@ public class BlockActivity : IgnoreActivity
 /// <inheritdoc cref="BlockActivity" />
 [APType(BlockType)]
 [ImpliesOtherEntity(typeof(IgnoreActivityEntity))]
-public sealed class BlockActivityEntity : ASEntity<BlockActivity>
+public sealed class BlockActivityEntity : IHasNonEntity<BlockActivity>
 {
     public const string BlockType = "Block";
     public override string ASTypeName => BlockType;

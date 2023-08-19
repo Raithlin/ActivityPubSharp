@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Actor;
 /// </summary>
 public class ServiceActor : ASActor
 {
-    public ServiceActor() => Entity = new ServiceActorEntity { TypeMap = TypeMap };
+    public ServiceActor() => Entity = TypeMap.Add<ServiceActorEntity>();
     public ServiceActor(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ServiceActorEntity>();
     private ServiceActorEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class ServiceActor : ASActor
 /// <inheritdoc cref="ServiceActor" />
 [APType(ServiceType)]
 [ImpliesOtherEntity(typeof(ASActorEntity))]
-public sealed class ServiceActorEntity : ASEntity<ServiceActor>
+public sealed class ServiceActorEntity : IHasNonEntity<ServiceActor>
 {
     public const string ServiceType = "Service";
     public override string ASTypeName => ServiceType;

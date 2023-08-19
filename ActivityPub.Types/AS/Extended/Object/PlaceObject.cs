@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class PlaceObject : ASObject
 {
-    public PlaceObject() => Entity = new PlaceObjectEntity { TypeMap = TypeMap };
+    public PlaceObject() => Entity = TypeMap.Add<PlaceObjectEntity>();
     public PlaceObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<PlaceObjectEntity>();
     private PlaceObjectEntity Entity { get; }
 
@@ -85,7 +85,7 @@ public class PlaceObject : ASObject
 /// <inheritdoc cref="PlaceObject" />
 [APType(PlaceType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class PlaceObjectEntity : ASEntity<PlaceObject>
+public sealed class PlaceObjectEntity : IHasNonEntity<PlaceObject>
 {
     public const string PlaceType = "Place";
     public override string ASTypeName => PlaceType;

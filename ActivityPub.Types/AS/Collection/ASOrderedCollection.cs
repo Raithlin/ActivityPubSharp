@@ -20,7 +20,7 @@ namespace ActivityPub.Types.AS.Collection;
 /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection" />
 public class ASOrderedCollection : ASObject
 {
-    public ASOrderedCollection() => Entity = new ASOrderedCollectionEntity { TypeMap = TypeMap };
+    public ASOrderedCollection() => Entity = TypeMap.Add<ASOrderedCollectionEntity>();
     public ASOrderedCollection(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ASOrderedCollectionEntity>();
     private ASOrderedCollectionEntity Entity { get; }
 
@@ -104,7 +104,7 @@ public class ASOrderedCollection : ASObject
 /// <inheritdoc cref="ASOrderedCollection" />
 [APType(OrderedCollectionType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class ASOrderedCollectionEntity : ASEntity<ASOrderedCollection>
+public sealed class ASOrderedCollectionEntity : IHasNonEntity<ASOrderedCollection>
 {
     public const string OrderedCollectionType = "OrderedCollection";
 

@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class FlagActivity : ASTransitiveActivity
 {
-    public FlagActivity() => Entity = new FlagActivityEntity { TypeMap = TypeMap };
+    public FlagActivity() => Entity = TypeMap.Add<FlagActivityEntity>();
     public FlagActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<FlagActivityEntity>();
     private FlagActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class FlagActivity : ASTransitiveActivity
 /// <inheritdoc cref="FlagActivity" />
 [APType(FlagType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class FlagActivityEntity : ASEntity<FlagActivity>
+public sealed class FlagActivityEntity : IHasNonEntity<FlagActivity>
 {
     public const string FlagType = "Flag";
     public override string ASTypeName => FlagType;

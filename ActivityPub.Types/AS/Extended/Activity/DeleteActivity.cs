@@ -11,7 +11,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class DeleteActivity : ASTransitiveActivity
 {
-    public DeleteActivity() => Entity = new DeleteActivityEntity { TypeMap = TypeMap };
+    public DeleteActivity() => Entity = TypeMap.Add<DeleteActivityEntity>();
     public DeleteActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<DeleteActivityEntity>();
     private DeleteActivityEntity Entity { get; }
 }
@@ -19,7 +19,7 @@ public class DeleteActivity : ASTransitiveActivity
 /// <inheritdoc cref="DeleteActivity" />
 [APType(DeleteType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class DeleteActivityEntity : ASEntity<DeleteActivity>
+public sealed class DeleteActivityEntity : IHasNonEntity<DeleteActivity>
 {
     public const string DeleteType = "Delete";
     public override string ASTypeName => DeleteType;

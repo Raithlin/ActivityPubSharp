@@ -13,7 +13,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class RelationshipObject : ASObject
 {
-    public RelationshipObject() => Entity = new RelationshipObjectEntity { TypeMap = TypeMap };
+    public RelationshipObject() => Entity = TypeMap.Add<RelationshipObjectEntity>();
     public RelationshipObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<RelationshipObjectEntity>();
     private RelationshipObjectEntity Entity { get; }
 
@@ -55,7 +55,7 @@ public class RelationshipObject : ASObject
 /// <inheritdoc cref="RelationshipObject" />
 [APType(RelationshipType)]
 [ImpliesOtherEntity(typeof(ASObjectEntity))]
-public sealed class RelationshipObjectEntity : ASEntity<RelationshipObject>
+public sealed class RelationshipObjectEntity : IHasNonEntity<RelationshipObject>
 {
     public const string RelationshipType = "Relationship";
     public override string ASTypeName => RelationshipType;

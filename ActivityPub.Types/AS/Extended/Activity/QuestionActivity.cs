@@ -15,7 +15,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class QuestionActivity : ASIntransitiveActivity
 {
-    public QuestionActivity() => Entity = new QuestionActivityEntity { TypeMap = TypeMap };
+    public QuestionActivity() => Entity = TypeMap.Add<QuestionActivityEntity>();
     public QuestionActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<QuestionActivityEntity>();
     private QuestionActivityEntity Entity { get; }
 
@@ -75,7 +75,7 @@ public class QuestionActivity : ASIntransitiveActivity
 /// <inheritdoc cref="QuestionActivity" />
 [APType(QuestionType)]
 [ImpliesOtherEntity(typeof(ASIntransitiveActivityEntity))]
-public sealed class QuestionActivityEntity : ASEntity<QuestionActivity>
+public sealed class QuestionActivityEntity : IHasNonEntity<QuestionActivity>
 {
     public const string QuestionType = "Question";
 

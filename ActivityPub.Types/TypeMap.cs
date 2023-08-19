@@ -13,7 +13,7 @@ namespace ActivityPub.Types;
 [JsonConverter(typeof(TypeMapConverter))]
 public class TypeMap
 {
-    private readonly Dictionary<Type, ASEntity> _allEntities = new();
+    private readonly Dictionary<Type, IEntity> _allEntities = new();
 
     private readonly HashSet<string> _asTypes = new();
 
@@ -24,7 +24,7 @@ public class TypeMap
     private readonly Dictionary<Type, ASType> _typeCache = new();
 
     // Map non-entities to entity that can construct it
-    private readonly Dictionary<Type, ASEntity> _typeEntityMap = new();
+    private readonly Dictionary<Type, IHasNonEntity<ASType>> _typeEntityMap = new();
 
     // Set of all ASLink entities in the map
     private readonly HashSet<ILinkEntity> _linkEntities = new();
@@ -52,8 +52,8 @@ public class TypeMap
     ///     This may be a subset or superset of ASTypes.
     /// </summary>
     /// <seealso cref="ASTypes" />
-    public IReadOnlyDictionary<Type, ASEntity> AllEntities => _allEntities;
-
+    public IReadOnlyDictionary<Type, IEntity> AllEntities => _allEntities;
+    
     public IJsonLDContext LDContext => _ldContext;
     private readonly JsonLDContext _ldContext;
 
@@ -68,7 +68,7 @@ public class TypeMap
     ///     Checks if the object contains a particular type entity.
     /// </summary>
     public bool IsEntity<T>()
-        where T : ASEntity
+        where T : class, IEntity
         => _allEntities.ContainsKey(typeof(T));
 
     /// <summary>
@@ -78,7 +78,7 @@ public class TypeMap
     /// <seealso cref="IsEntity{T}()" />
     /// <seealso cref="AsEntity{T}" />
     public bool IsEntity<T>([NotNullWhen(true)] out T? instance)
-        where T : ASEntity
+        where T : class, IEntity
     {
         if (_allEntities.TryGetValue(typeof(T), out var instanceT))
         {
@@ -100,7 +100,7 @@ public class TypeMap
     /// <seealso cref="IsEntity{T}(out T?)" />
     /// <throws cref="InvalidCastException">If the object is not of type T</throws>
     public T AsEntity<T>()
-        where T : ASEntity
+        where T : class, IEntity
     {
         var type = typeof(T);
         if (!_allEntities.TryGetValue(type, out var instance))
@@ -176,12 +176,25 @@ public class TypeMap
 
         throw new InvalidCastException($"Can't represent the graph as type {typeof(T)}");
     }
+    
+    /// <summary>
+    ///     Like <see cref="Add"/>, but automatically creates an empty instance.
+    /// </summary>
+    /// <typeparam name="TEntity">Type of entity. Must implement IEntity and have a no-args constructor.</typeparam>
+    /// <returns>Returns the constructed and linked instance</returns>
+    public TEntity Add<TEntity>()
+        where TEntity : IEntity, new()
+    {
+        var entity = new TEntity();
+        Add(entity);
+        return entity;
+    }
 
     /// <summary>
     ///     Like <see cref="TryAdd"/>, but throws if a conflicting entity already exists in the map.
     /// </summary>
     /// <throws cref="InvalidOperationException">If an object of this type already exists in the graph</throws>
-    internal void Add(ASEntity instance)
+    public void Add(IEntity instance)
     {
         if (!TryAdd(instance))
             throw new InvalidOperationException($"Can't add {instance.GetType()} to graph - it already exists in the TypeMap");
@@ -191,13 +204,8 @@ public class TypeMap
     ///     Adds a new typed instance to the object.
     ///     Metadata such as AS types and JSON-LD context is automatically updated.
     /// </summary>
-    /// <remarks>
-    ///     This method is internal, as it should only be called by <see cref="ASEntity" /> constructor.
-    ///     User code should instead add a new type by passing an existing TypeMap into the constructor.
-    ///     This is not a technical limitation, but rather an intentional choice to prevent the construction of invalid objects.
-    /// </remarks>
     /// <returns>true if the type was added, false if it was already in the type map</returns>
-    internal bool TryAdd(ASEntity instance)
+    public bool TryAdd(IEntity instance)
     {
         var type = instance.GetType();
 
@@ -235,7 +243,7 @@ public class TypeMap
     }
 
     // Inefficient implementation
-    private void NarrowUnmappedProperties(ASEntity entity)
+    private void NarrowUnmappedProperties(IEntity entity)
     {
         // Skip if the properties weren't populated
         if (entity.UnmappedProperties == null)

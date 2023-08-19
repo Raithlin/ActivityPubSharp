@@ -12,7 +12,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class UpdateActivity : ASTransitiveActivity
 {
-    public UpdateActivity() => Entity = new UpdateActivityEntity { TypeMap = TypeMap };
+    public UpdateActivity() => Entity = TypeMap.Add<UpdateActivityEntity>();
     public UpdateActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<UpdateActivityEntity>();
     private UpdateActivityEntity Entity { get; }
 }
@@ -20,7 +20,7 @@ public class UpdateActivity : ASTransitiveActivity
 /// <inheritdoc cref="UpdateActivity" />
 [APType(UpdateType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class UpdateActivityEntity : ASEntity<UpdateActivity>
+public sealed class UpdateActivityEntity : IHasNonEntity<UpdateActivity>
 {
     public const string UpdateType = "Update";
     public override string ASTypeName => UpdateType;

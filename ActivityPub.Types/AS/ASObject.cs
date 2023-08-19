@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using ActivityPub.Types.AS.Collection;
 using ActivityPub.Types.AS.Extended.Object;
-using ActivityPub.Types.Attributes;
 using ActivityPub.Types.Conversion.Overrides;
 using ActivityPub.Types.Internal;
 using ActivityPub.Types.Util;
@@ -20,7 +19,7 @@ namespace ActivityPub.Types.AS;
 /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-object" />
 public class ASObject : ASType
 {
-    public ASObject() => Entity = new ASObjectEntity { TypeMap = TypeMap };
+    public ASObject() => Entity = TypeMap.Add<ASObjectEntity>();
     public ASObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<ASObjectEntity>();
     private ASObjectEntity Entity { get; }
 
@@ -301,13 +300,11 @@ public class ASObject : ASType
 }
 
 /// <inheritdoc cref="ASObject" />
-[APType(ObjectType)]
-[ImpliesOtherEntity(typeof(ASTypeEntity))]
-public sealed class ASObjectEntity : ASEntity<ASObject>, ISubTypeDeserialized
+public sealed class ASObjectEntity : IHasNonEntity<ASObject>, IConvertibleEntity, ISubTypeDeserialized
 {
-    public const string ObjectType = "Object";
-    public override string ASTypeName => ObjectType;
+    public static string ASTypeName => "Object";
 
+    public static IEnumerable<Type> ImpliedEntities { get; } = new[] { typeof(ASTypeEntity) };
 
     /// <inheritdoc cref="ASObject.Attachment" />
     [JsonPropertyName("attachment")]

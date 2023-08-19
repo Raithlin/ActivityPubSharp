@@ -22,7 +22,7 @@ public static class BugFixModifier
     }
 
     /// <summary>
-    ///     Remove all public properties from <see cref="ASEntity"/> and <see cref="ASEntity{T}"/>.
+    ///     Remove all public properties from <see cref="IEntity"/> and <see cref="IHasNonEntity{TType}"/>.
     ///     Works around <a href="https://github.com/dotnet/runtime/issues/50078">issue #50078</a>.
     /// </summary>
     public static void HideASEntity(JsonTypeInfo jsonTypeInfo)
@@ -43,13 +43,13 @@ public static class BugFixModifier
     // Ugly hack
     private static bool IsIgnoreProp(string name)
     {
-        if (name.Equals(nameof(ASEntity.ASTypeName), StringComparison.OrdinalIgnoreCase))
+        if (name.Equals(nameof(IEntity.ASTypeName), StringComparison.OrdinalIgnoreCase))
             return true;
 
-        if (name.Equals(nameof(ASEntity.ReplacesASTypes), StringComparison.OrdinalIgnoreCase))
+        if (name.Equals(nameof(IEntity.ReplacesASTypes), StringComparison.OrdinalIgnoreCase))
             return true;
 
-        if (name.Equals(nameof(ASEntity.TypeMap), StringComparison.OrdinalIgnoreCase))
+        if (name.Equals(nameof(IEntity.TypeMap), StringComparison.OrdinalIgnoreCase))
             return true;
 
         if (name.Equals(nameof(ILinkEntity.RequiresObjectForm), StringComparison.OrdinalIgnoreCase))

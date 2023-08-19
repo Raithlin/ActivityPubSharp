@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Activity;
 /// </summary>
 public class DislikeActivity : ASTransitiveActivity
 {
-    public DislikeActivity() => Entity = new DislikeActivityEntity { TypeMap = TypeMap };
+    public DislikeActivity() => Entity = TypeMap.Add<DislikeActivityEntity>();
     public DislikeActivity(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<DislikeActivityEntity>();
     private DislikeActivityEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class DislikeActivity : ASTransitiveActivity
 /// <inheritdoc cref="DislikeActivity" />
 [APType(DislikeType)]
 [ImpliesOtherEntity(typeof(ASTransitiveActivityEntity))]
-public sealed class DislikeActivityEntity : ASEntity<DislikeActivity>
+public sealed class DislikeActivityEntity : IHasNonEntity<DislikeActivity>
 {
     public const string DislikeType = "Dislike";
     public override string ASTypeName => DislikeType;

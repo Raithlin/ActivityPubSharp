@@ -10,7 +10,7 @@ namespace ActivityPub.Types.AS.Extended.Object;
 /// </summary>
 public class VideoObject : DocumentObject
 {
-    public VideoObject() => Entity = new VideoObjectEntity { TypeMap = TypeMap };
+    public VideoObject() => Entity = TypeMap.Add<VideoObjectEntity>();
     public VideoObject(TypeMap typeMap) : base(typeMap) => Entity = TypeMap.AsEntity<VideoObjectEntity>();
     private VideoObjectEntity Entity { get; }
 }
@@ -18,7 +18,7 @@ public class VideoObject : DocumentObject
 /// <inheritdoc cref="VideoObject" />
 [APType(VideoType)]
 [ImpliesOtherEntity(typeof(DocumentObjectEntity))]
-public sealed class VideoObjectEntity : ASEntity<VideoObject>
+public sealed class VideoObjectEntity : IHasNonEntity<VideoObject>
 {
     public const string VideoType = "Video";
     public override string ASTypeName => VideoType;

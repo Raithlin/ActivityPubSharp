@@ -10,19 +10,19 @@ namespace ActivityPub.Types.AS;
 /// <summary>
 ///     Base type of all ActivityStreams / ActivityPub objects.
 ///     Subtypes MUST NOT contain any properties!
-///     Instead, all data should be stored in a matching entity class which derives from <see cref="ASEntity{TType}" />.
+///     Instead, all data should be stored in a matching entity class which derives from <see cref="IHasNonEntity{TType}" />.
 /// </summary>
 /// <remarks>
 ///     This is a synthetic type created to help adapt ActivityStreams to the .NET object model.
 ///     It does not exist in the ActivityStreams standard.
 /// </remarks>
-/// <seealso cref="ASEntity{TType}" />
+/// <seealso cref="IHasNonEntity{TType}" />
 public class ASType
 {
     public ASType()
     {
         TypeMap = new TypeMap();
-        Entity = new ASTypeEntity { TypeMap = TypeMap };
+        Entity = TypeMap.Add<ASTypeEntity>();
     }
 
     public ASType(TypeMap typeMap)
@@ -120,7 +120,7 @@ public class ASType
 }
 
 /// <inheritdoc cref="ASType" />
-public sealed class ASTypeEntity : ASEntity<ASType>, ILinkEntity
+public sealed class ASTypeEntity : IHasNonEntity<ASType>, ILinkEntity
 {
     private string? _id;
 
