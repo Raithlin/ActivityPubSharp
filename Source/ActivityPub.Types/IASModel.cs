@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using ActivityPub.Types.AS;
 using ActivityPub.Types.Internal;
 using ActivityPub.Types.Util;
+using JetBrains.Annotations;
 
 namespace ActivityPub.Types;
 
@@ -50,6 +51,7 @@ public interface IASModel<out TModel>
     /// </summary>
     /// <param name="inputJson">JSON message that is being converted. May not be an object.</param>
     /// <param name="typeMap">Type graph that may contain the object. Contains the JSON-LD context and other metadata.</param>
+    [PublicAPI]
     public static virtual bool? ShouldConvertFrom(JsonElement inputJson, TypeMap typeMap) => null;
     
 #region Horrendous hack to identify derived types without reflection
