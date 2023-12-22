@@ -27,7 +27,7 @@ public class ASType : IASModel<ASType, ASTypeEntity>
     public ASType()
     {
         TypeMap = new TypeMap();
-        Entity = TypeMap.Extend<ASTypeEntity>();
+        Entity = TypeMap.Extend<ASType, ASTypeEntity>();
     }
 
     /// <summary>
@@ -40,11 +40,11 @@ public class ASType : IASModel<ASType, ASTypeEntity>
     /// <exception cref="InvalidOperationException">If <code>extendGraph</code> is <see langword="true"/> and the entity type already exists in the graph</exception>
     /// <exception cref="InvalidOperationException">If <code>extendGraph</code> is <see langword="true"/> and the entity requires another entity that is missing from the graph</exception>
     /// <exception cref="InvalidCastException">If <code>extendGraph</code> is <see langword="false"/> and the object is not of type <code>TEntity</code></exception>
-    /// <seealso cref="TypeMap.ProjectTo{TEntity}(bool)" />
+    /// <seealso cref="TypeMap.ProjectTo{TModel, TEntity}(bool)" />
     public ASType(TypeMap typeMap, bool isExtending = true)
     {
         TypeMap = typeMap;
-        Entity = TypeMap.ProjectTo<ASTypeEntity>(isExtending);
+        Entity = TypeMap.ProjectTo<ASType, ASTypeEntity>(isExtending);
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class ASType : IASModel<ASType, ASTypeEntity>
     public ASType(TypeMap typeMap, ASTypeEntity? entity)
     {
         TypeMap = typeMap;
-        Entity = entity ?? typeMap.AsEntity<ASTypeEntity>();
+        Entity = entity ?? typeMap.AsEntity<ASType, ASTypeEntity>();
     }
 
     static ASType IASModel<ASType>.FromGraph(TypeMap typeMap) => new(typeMap, null);
