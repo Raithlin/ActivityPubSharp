@@ -2,6 +2,7 @@
 // If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using ActivityPub.Types.Util;
 using JetBrains.Annotations;
@@ -130,7 +131,6 @@ public class ASType : IASModel<ASType, ASTypeEntity>
         get => Entity.MediaType;
         set => Entity.MediaType = value;
     }
-
 
     /// <inheritdoc cref="Types.TypeMap.IsModel{TModel}()" />
     public bool Is<TModel>()

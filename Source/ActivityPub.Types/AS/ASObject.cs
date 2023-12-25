@@ -220,8 +220,8 @@ public class ASObject : ASType, IASModel<ASObject, ASObjectEntity, ASType>
     /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-content" />
     public NaturalLanguageString? Content
     {
-        get => Entity.Content;
-        set => Entity.Content = value;
+        get => Entity.ContentMap;
+        set => Entity.ContentMap = value;
     }
 
     /// <summary>
@@ -327,7 +327,7 @@ public class ASObject : ASType, IASModel<ASObject, ASObjectEntity, ASType>
 }
 
 /// <inheritdoc cref="ASObject" />
-public sealed class ASObjectEntity : ASEntity<ASObject, ASObjectEntity>
+public sealed class ASObjectEntity : ASEntity<ASObject, ASObjectEntity>, IJsonOnDeserialized, IJsonOnSerializing
 {
     /// <inheritdoc cref="ASObject.Attachment" />
     [JsonPropertyName("attachment")]
@@ -391,7 +391,11 @@ public sealed class ASObjectEntity : ASEntity<ASObject, ASObjectEntity>
 
     /// <inheritdoc cref="ASObject.Content" />
     [JsonPropertyName("contentMap")]
-    public NaturalLanguageString? Content { get; set; }
+    public NaturalLanguageString? ContentMap { get; set; }
+
+    /// <inheritdoc cref="ASObject.Content" />
+    [JsonPropertyName("content")]
+    public string? Content { get; set; }
 
     /// <inheritdoc cref="ASObject.Duration" />
     [JsonPropertyName("duration")]
@@ -428,4 +432,25 @@ public sealed class ASObjectEntity : ASEntity<ASObject, ASObjectEntity>
     /// <inheritdoc cref="ASObject.Shares" />
     [JsonPropertyName("shares")]
     public Linkable<ASCollection>? Shares { get; set; }
+    
+    // Sync up "content" and "contentMap" properties
+    void IJsonOnDeserialized.OnDeserialized()
+    {
+        if (Content == null)
+            return;
+
+        if (ContentMap == null)
+            ContentMap = Content;
+        else
+            ContentMap.DefaultValue = Content;
+    }
+    
+    // Sync up "content" and "contentMap" properties
+    void IJsonOnSerializing.OnSerializing()
+    {
+        Content = ContentMap?.DefaultValue;
+
+        if (ContentMap?.HasLanguages == false)
+            ContentMap = null;
+    }
 }

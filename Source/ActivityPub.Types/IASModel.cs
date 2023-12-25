@@ -1,7 +1,6 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
 // If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ActivityPub.Types.AS;
@@ -55,10 +54,11 @@ public interface IASModel<out TModel>
     public static virtual bool? ShouldConvertFrom(JsonElement inputJson, TypeMap typeMap) => null;
     
 #region Horrendous hack to identify derived types without reflection
-    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
-    internal static virtual ASNameTree ASNameTree { get; } = new(TModel.ASTypeName, TModel.BaseNameTree);
-    protected private static virtual ASNameTree? BaseNameTree => null;
+    internal static virtual HashSet<string>? DerivedTypeNames => ASNameTree.GetDerivedTypesFor(TModel.ASTypeName);
+    static IASModel() => ASNameTree.Add(TModel.ASTypeName, TModel.BaseTypeName);
 #endregion
+    
+    
 }
 
 /// <summary>
@@ -88,5 +88,4 @@ public interface IASModel<out TModel, out TEntity, out TBaseModel> : IASModel<TM
     where TBaseModel : ASType, IASModel<TBaseModel>
 {
     static string? IASModel<TModel>.BaseTypeName => TBaseModel.ASTypeName ?? TBaseModel.BaseTypeName;
-    static ASNameTree IASModel<TModel>.BaseNameTree => TBaseModel.ASNameTree;
 }

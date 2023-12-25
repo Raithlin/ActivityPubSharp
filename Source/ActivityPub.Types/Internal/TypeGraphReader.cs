@@ -98,7 +98,8 @@ internal class TypeGraphReader : ITypeGraphReader
         // Otherwise, an object like {"type":"Create"} would not be detected as a type of Activity. 
         // This is non-trivial, as we must do this without reflection (this code is on the hot path).
         // Fortunately, most of the work is done for us by ASNameTree.
-        return _asTypes.Overlaps(TModel.ASNameTree.DerivedTypeNames);
+        var derivedTypes = TModel.DerivedTypeNames;
+        return derivedTypes != null && _asTypes.Overlaps(derivedTypes);
     }
 
     private static JsonLDContext ReadASContext(JsonElement element, JsonSerializerOptions options)
@@ -118,7 +119,7 @@ internal class TypeGraphReader : ITypeGraphReader
         // An object without the types field is just "object"
         if (!element.TryGetProperty("type", out var typeProp))
             return new HashSet<string>
-            {
+            { // TODO remove object
                 ASObject.ObjectType
             };
         
