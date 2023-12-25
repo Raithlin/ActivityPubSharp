@@ -215,7 +215,6 @@ public class ASObject : ASType, IASModel<ASObject, ASObjectEntity, ASType>
     /// </summary>
     /// <remarks>
     ///     In JSON, this property may be mapped to either or both of "content" and "contentMap".
-    ///     TODO reimplement this on the model side
     /// </remarks>
     /// <seealso href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-content" />
     public NaturalLanguageString? Content

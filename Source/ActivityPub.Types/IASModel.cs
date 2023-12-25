@@ -53,12 +53,12 @@ public interface IASModel<out TModel>
     [PublicAPI]
     public static virtual bool? ShouldConvertFrom(JsonElement inputJson, TypeMap typeMap) => null;
     
-#region Horrendous hack to identify derived types without reflection
+    /// <summary>
+    ///     AS name of all types that derive from this one.
+    /// </summary>
+    /// <seealso cref="ASNameTree"/>
     internal static virtual HashSet<string>? DerivedTypeNames => ASNameTree.GetDerivedTypesFor(TModel.ASTypeName);
     static IASModel() => ASNameTree.Add(TModel.ASTypeName, TModel.BaseTypeName);
-#endregion
-    
-    
 }
 
 /// <summary>
